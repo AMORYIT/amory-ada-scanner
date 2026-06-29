@@ -1,0 +1,41 @@
+name: Weekly ADA Accessibility Scan
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 13 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Run WCAG scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run accessibility scan
+        run: npm run scan
+        continue-on-error: true
+
+      - name: Upload accessibility reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: ada-accessibility-reports
+          path: |
+            reports/ada-report.json
+            reports/ada-summary.html
+            reports/ada-summary.md
+          if-no-files-found: warn
