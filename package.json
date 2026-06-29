@@ -1,0 +1,16 @@
+{
+  "name": "amory-ada-scanner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Weekly ADA Title II / WCAG 2.1 AA accessibility scanner for a school district website.",
+  "scripts": {
+    "scan": "node src/run-scan.js",
+    "email": "node src/email-report.js",
+    "scan-and-email": "npm run scan && npm run email"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.4",
+    "pa11y": "^8.0.0"
+  }
+}

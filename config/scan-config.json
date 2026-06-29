@@ -1,0 +1,55 @@
+{
+  "districtName": "Amory School District",
+  "website": "https://www.amoryschools.com",
+  "standard": "WCAG2AA",
+  "scheduleDescription": "Mondays at approximately 8:00 AM Central",
+  "scan": {
+    "includeSitemap": true,
+    "sitemapUrl": "https://www.amoryschools.com/sitemap.xml",
+    "maxSitemapUrls": 75,
+    "timeoutMs": 60000,
+    "waitMs": 1000,
+    "concurrency": 2,
+    "maxIssuesPerPageInSummary": 20,
+    "excludeUrlPatterns": [
+      "facebook.com",
+      "twitter.com",
+      "x.com",
+      "instagram.com",
+      "youtube.com",
+      "mailto:",
+      "tel:"
+    ],
+    "priorityUrls": [
+      "https://www.amoryschools.com/",
+      "https://www.amoryschools.com/documents",
+      "https://www.amoryschools.com/page/food-services",
+      "https://www.amoryschools.com/page/special-education",
+      "https://www.amoryschools.com/page/registration",
+      "https://www.amoryschools.com/page/incident-report-form",
+      "https://www.amoryschools.com/page/contact-us",
+      "https://www.amoryschools.com/page/asd-school-map",
+      "https://www.amoryschools.com/o/ams",
+      "https://www.amoryschools.com/o/ams/live-feed",
+      "https://www.amoryschools.com/o/ams/staff"
+    ]
+  },
+  "report": {
+    "title": "Weekly ADA / WCAG 2.1 AA Accessibility Scan",
+    "manualVerificationReminder": [
+      "Keyboard-only navigation",
+      "Screen-reader testing",
+      "PDF tagging and reading order",
+      "Form labels, required fields, and error messages",
+      "Meaningful alt text for flyers and complex images",
+      "Video captions and transcripts",
+      "Third-party embedded tools"
+    ]
+  },
+  "email": {
+    "enabled": true,
+    "subjectPrefix": "Weekly ADA Scan",
+    "attachJson": true,
+    "attachHtml": true
+  }
+}
