@@ -3,7 +3,7 @@ name: Weekly ADA Accessibility Scan
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 13 * * 1"
+    - cron: "0 1 * * 1"
       timezone: "America/Chicago"
 
 permissions:
