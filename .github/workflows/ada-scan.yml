@@ -3,17 +3,22 @@ name: Weekly ADA Accessibility Scan
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 1 * * 1"
-      timezone: "America/Chicago"
+    - cron: "0 13 * * 1"
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 jobs:
   scan:
-    name: Run WCAG scan
+    name: Run WCAG scan and publish report
     runs-on: ubuntu-latest
     timeout-minutes: 45
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Check out repository
@@ -31,20 +36,18 @@ jobs:
         run: npm run scan
         continue-on-error: true
 
-      - name: Upload accessibility reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: ada-accessibility-reports
-          path: |
-            reports/ada-report.json
-            reports/ada-summary.html
-            reports/ada-summary.md
-          if-no-files-found: warn
+      - name: Prepare GitHub Pages site
+        run: |
+          mkdir -p public
+          cp reports/ada-summary.html public/index.html
+          cp reports/ada-report.json public/ada-report.json
+          cp reports/ada-summary.md public/ada-summary.md
 
-      - name: Email accessibility report
-        if: always()
-        env:
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-          REPORT_TO: ${{ secrets.REPORT_TO }}
-        run: npm run email
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
