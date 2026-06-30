@@ -16,7 +16,11 @@ async function main() {
   }
 
   const config = JSON.parse(await fs.readFile(configPath, "utf8"));
-  const report = JSON.parse(await fs.readFile(path.join(reportsDir, "ada-report.json"), "utf8"));
+  const report = JSON.parse(
+    await fs.readFile(path.join(reportsDir, "ada-report.json"), "utf8")
+  );
+
+  const reportUrl = "https://amoryit.github.io/amory-ada-scanner/";
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -42,26 +46,15 @@ URLs scanned: ${report.scannedUrlCount}
 Total automated findings: ${report.totalIssues}
 High-priority findings: ${report.highIssues}
 
+View the report:
+${reportUrl}
+
 Important:
-Automated scans do not prove full ADA Title II compliance. Manual verification is still required.
-`,
-    attachments: [
-      {
-        filename: "ada-summary.html",
-        path: path.join(reportsDir, "ada-summary.html")
-      },
-      {
-        filename: "ada-report.json",
-        path: path.join(reportsDir, "ada-report.json")
-      },
-      {
-        filename: "ada-summary.md",
-        path: path.join(reportsDir, "ada-summary.md")
-      }
-    ]
+Automated scans do not prove full ADA Title II compliance. Manual verification is still required for keyboard navigation, screen readers, PDFs, forms, captions, third-party tools, and meaningful alt text.
+`
   });
 
-  console.log("Gmail report email sent.");
+  console.log(`Gmail report email sent with link: ${reportUrl}`);
 }
 
 main().catch(error => {
