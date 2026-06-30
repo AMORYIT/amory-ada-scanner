@@ -32,7 +32,10 @@ async function main() {
 
   await transporter.sendMail({
     from: gmailUser,
-    to: reportTo,
+    to: reportTo
+      .split(",")
+      .map(email => email.trim())
+      .filter(Boolean),
     subject: `Weekly ADA Scan - ${config.districtName} - ${report.totalIssues} findings`,
     text: `
 Weekly ADA / WCAG 2.1 AA Accessibility Scan
